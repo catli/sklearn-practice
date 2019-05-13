@@ -73,7 +73,7 @@ This increase relates to the steady increase in price which resulted in the
 past training points being last comparable to new price. When the price
 dipped past a certain level, the error rate also dropped.
 
-![MRAE by month](error_by_month.png)
+![MRAE by month](err_by_month.png)
 ![Median price by month](price_by_month.png)
 
 
