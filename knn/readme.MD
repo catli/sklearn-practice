@@ -6,7 +6,7 @@ The goal is to create an KNN model that predicts the precise of a house based on
 it's K nearest neighbor.
 
 
-###### Below are the data considerations:
+##### Below are the data considerations:
 * Pricing label: About 2-3% of the closing prices were zero value or negative values.
 This is likely to be an error, so for the purpose of this tasks, without further insight
 into why these values exist, we will exclude these values. Creating prediction where
@@ -28,7 +28,7 @@ does not belong in the training dataset.
 ![Median price by month](price_by_month.png)
 
 
-As well as some modeling considerations:
+##### As well as some modeling considerations:
 * Training: Unlike other types of models, the training and prediction steps are
 combined  so the dataset is not split before running into training / evaluation
 data. Rather, at each step I include all observations that occur before
@@ -43,9 +43,9 @@ Having tried it out both ways, the best prediction seems to b
 
 
 
-###### Discussion
+##### Discussion
 
-* What is the performance of the model measured in Median Relative Absolute Error?
+**What is the performance of the model measured in Median Relative Absolute Error?**
 
 The median relative absolute error is 20%, so that means for 50% of the prediction
 we expect the predicted price to be 20% above actual closing price.
@@ -58,12 +58,12 @@ is combined and and calculating our target criterion. The function
 `iterMultipleK` in `model.py` provides the steps iterate and calculate MRAE
 at varying k values. One consideration when testing for optimal k is how slow
 and time-consuming currently training takes. Two suggestions around this:
- ** If we calculate using log-prices rather than prices,
+ * If we calculate using log-prices rather than prices,
      the runtime can be slightly faster.
- ** For the purpose of hyperparameter tuning, we might also want to run the
+ * For the purpose of hyperparameter tuning, we might also want to run the
      model with approximate neighbors.
 
-* Do you notice any spatial or temporal trends in error?
+**Do you notice any spatial or temporal trends in error?**
 
 The error has a temporal trend that corresponds with the change in closing price
 over time. There are higher errors at the start, obviously because there are
@@ -77,7 +77,7 @@ dipped past a certain level, the error rate also dropped.
 ![Median price by month](price_by_month.png)
 
 
-* How would you improve this model?
+**How would you improve this model?**
 
 Here are some potential improvements to test out:
 1. Adding features: Include dates as an additional training feature, so we can
@@ -90,7 +90,7 @@ datapoints too far from the target may not be helpful, so set limits
 on distances to far from target point.
 
 
-* How would you productionize this model?
+**How would you productionize this model?**
 
 This model, I imagine, can be run overnight and may not need to be regenerated
 every hour. Here are steps I would take to productionize model:
