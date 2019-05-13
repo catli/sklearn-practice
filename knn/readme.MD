@@ -6,10 +6,10 @@ The goal is to create an KNN model that predicts the precise of a house based on
 it's K nearest neighbor.
 
 
-##### Below are the data considerations:
+#### Below are the data considerations:
 * Pricing label: About 2-3% of the closing prices were zero value or negative values.
 This is likely to be an error, so for the purpose of this tasks, without further insight
-into why these values exist, we will exclude these values. Creating prediction where
+into why these values exist, we will exclude these values. Prediction where
 the price is zero or negative is not very helpful.
 
 * KNN training features: Analysis of the data confirms that there are variations
@@ -23,27 +23,28 @@ leakage. Since lat and long are on the same scale, feature scaling will not be
 necessary before training. Closing date will be used to filter out data that
 does not belong in the training dataset.
 
-
+_avg closing price (natural log of price) by latitude and longitude_
 ![Avg price by latitude and longitude](lat_long_viz.png)
+_median closing price by month_
 ![Median price by month](price_by_month.png)
 
 
-##### As well as some modeling considerations:
+#### As well as some modeling considerations:
 * Training: Unlike other types of models, the training and prediction steps are
 combined  so the dataset is not split before running into training / evaluation
 data. Rather, at each step I include all observations that occur before
 the target prediction data in the training set.
 
-* K-number: The current model runs with K = 4. To optimize prediction accuracy, 
+* K-number: The current model runs with K = 4. To optimize prediction accuracy,
 we can tweak this number in the future, and optimize based on MRAE.
 
 * Weights: There are different options for how we weight each of the neighbor.
 We can either weigh them equally or we can weigh them based on inverse distance.
-Having tried it out both ways, the best prediction seems to b
+The mean of all neighbors actually seem to work better than inverse distance.
 
 
 
-##### Discussion
+#### Discussion
 
 **What is the performance of the model measured in Median Relative Absolute Error?**
 
@@ -58,6 +59,7 @@ is combined and and calculating our target criterion. The function
 `iterMultipleK` in `model.py` provides the steps iterate and calculate MRAE
 at varying k values. One consideration when testing for optimal k is how slow
 and time-consuming currently training takes. Two suggestions around this:
+
  * If we calculate using log-prices rather than prices,
      the runtime can be slightly faster.
  * For the purpose of hyperparameter tuning, we might also want to run the
@@ -73,7 +75,9 @@ This increase relates to the steady increase in price which resulted in the
 past training points being last comparable to new price. When the price
 dipped past a certain level, the error rate also dropped.
 
+_median absolute error by month_
 ![MRAE by month](err_by_month.png)
+_median closing price by month_
 ![Median price by month](price_by_month.png)
 
 
