@@ -24,8 +24,11 @@ necessary before training. Closing date will be used to filter out data that
 does not belong in the training dataset.
 
 _avg closing price (natural log of price) by latitude and longitude_
+
 ![Avg price by latitude and longitude](lat_long_viz.png)
+
 _median closing price by month_
+
 ![Median price by month](price_by_month.png)
 
 
@@ -76,8 +79,11 @@ past training points being last comparable to new price. When the price
 dipped past a certain level, the error rate also dropped.
 
 _median absolute error by month_
+
 ![MRAE by month](err_by_month.png)
+
 _median closing price by month_
+
 ![Median price by month](price_by_month.png)
 
 
@@ -96,13 +102,15 @@ on distances to far from target point.
 
 **How would you productionize this model?**
 
-This model, I imagine, can be run overnight and may not need to be regenerated
-every hour. Here are steps I would take to productionize model:
+This model may not have to run more than once a day, generating prediction
+as a nightly job. As such, we can afford some cushion for inference time.
+Here are steps I would take to productionize the model:
 1. Create data pipelines and ETL to store the training and inference features
 needed to generate new predictions every night.
 2. Create unit tests for functions for functions
-3. Set up API endpoints to generate prediction
-4. Store the error rate generated every night, automate an alert or revert to
+2. Set up the environment necessary to run `model.py`
+4. Create API endpoints that can b called to generate prediction
+5. Store the error rate generated every night, automate an alert or revert to
 previous data if error outside of acceptable range. Create visualization to
 track error rates.
 
@@ -112,7 +120,9 @@ and as the dataset grows larger, it may become more time consuming to generate
 run the model. Other than using approximate distnace, one solution to this may
 be to store previous euclidean distance measures for K neighbors for each
 prediction data point and then only running a nightly job on new available
-training / prediction data.
+training / prediction data. As mentioned earlier, if we only run this model,
+as a nightly job, we may not have to worry about the memory issue until we have
+a significnatly larger dataset.
 
 
 
